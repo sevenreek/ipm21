@@ -30,11 +30,11 @@ Hello world!
   title="Ścieżka 1"><br>
 
   <label for="dirpath2">Ścieżka 2:</label>
-  <input type="text" id="dirpath2" name="dirpath2" pattern="^(?:[\w]\:|\\)(\\[a-z_\-\s0-9\.]+)+" placeholder="C:\Example\Example"
+  <input type="text" id="dirpath2" name="dirpath2" pattern="[a-zA-Z]:[\\\/](?:[a-zA-Z0-9]+[\\\/])*([a-zA-Z0-9]+)" placeholder="C:\Example\Example"
   title="Ścieżka 2"><br>
 
   <label for="dirpath_etc">Ścieżka etc:</label>
-  <input type="text" id="dirpath_etc" name="dirpath_etc" pattern="^(?:[\w]\:|\\)(\\[a-z_\-\s0-9\.]+)+" placeholder="/etc/hosts"
+  <input type="text" id="dirpath_etc" name="dirpath_etc" pattern="^(/etc/).*" placeholder="/etc/hosts"
   title="Ścieżka etc"><br>
 
   <label for="ipv6">IPv6:</label>
