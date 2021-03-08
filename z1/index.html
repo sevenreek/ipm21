@@ -1,5 +1,3 @@
-Hello world!
-
 <form action="/action_page.php">
   <label for="email">Email:</label>
   <input type="email" id="email" name="email" placeholder="example@example.com"
@@ -26,11 +24,11 @@ Hello world!
   title="URL"><br>
 
   <label for="dirpath1">Ścieżka 1:</label>
-  <input type="text" id="dirpath1" name="dirpath1" pattern="^(?:[\w]\:|\\)(\\[a-z_\-\s0-9\.]+)+" placeholder="c:\example\example"
+  <input type="text" id="dirpath1" name="dirpath1" pattern="^[a-zA-Z]:\\(windows|winnt|win|dos|msdos)\\?[a-z]*" placeholder="c:\windows\example"
   title="Ścieżka 1"><br>
 
   <label for="dirpath2">Ścieżka 2:</label>
-  <input type="text" id="dirpath2" name="dirpath2" pattern="[a-zA-Z]:[\\\/](?:[a-zA-Z0-9]+[\\\/])*([a-zA-Z0-9]+)" placeholder="C:\Example\Example"
+  <input type="text" id="dirpath2" name="dirpath2" pattern="^[a-zA-Z]:\\([Ww][Ii][Nn][Dd][Oo][Ww][Ss]|[Ww][Ii][Nn][Nn]t|[Ww][Ii][Nn]|[Dd][Oo][Ss]|[Mm][Ss][Dd][Oo][Ss])\\?[a-zA-Z]*" placeholder="C:\Example\Example"
   title="Ścieżka 2"><br>
 
   <label for="dirpath_etc">Ścieżka etc:</label>
@@ -43,7 +41,7 @@ Hello world!
   title="IPv6"><br>
   
   <label for="tel">Numer telefonu:</label>
-  <input type="tel" id="tel" name="tel" pattern="\d{9}" placeholder="123456789"
+  <input type="tel" id="tel" name="tel" pattern="(\d{9})|(\+\d{11})" placeholder="123456789"
   title="Numer telefonu"><br>
 
   <input type="submit">
