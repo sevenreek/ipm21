@@ -1,0 +1,6 @@
+.text-input:invalid {
+    border: 2px solid red;
+}
+.text-input:valid {
+    border: 2px solid green;
+}
