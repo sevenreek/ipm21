@@ -1,6 +1,6 @@
-.text-input:invalid {
+.valid-checking:invalid {
     border: 2px solid red;
 }
-.text-input:valid {
+.valid-checking:valid {
     border: 2px solid green;
 }
