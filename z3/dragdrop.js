@@ -154,7 +154,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
           break;
 
         case 'up':
-          activeShape = null;
+          if(areShapesColliding(r, platform))
+          {
+            activeShape.x = activeShape.preMoveX;
+            activeShape.y = activeShape.preMoveY;
+          }
           rectangles.forEach(function(r) {
             if(r === activeShape) return;
             if(areShapesColliding(r, activeShape))
@@ -163,6 +167,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
               activeShape.y = activeShape.preMoveY;
             }
           });
+          activeShape = null;
           break;
 
         case 'move':
