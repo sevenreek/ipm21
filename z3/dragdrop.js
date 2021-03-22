@@ -49,7 +49,7 @@ class Button extends Rectangle {
 }
 
 
-var MouseTouchTracker = function (canvas, callback) {
+var MouseEventsTracker = function (canvas, callback) {
 
   function processEvent(evt) {
     var rect = canvas.getBoundingClientRect();
@@ -121,20 +121,20 @@ function randomColor()
 document.addEventListener('DOMContentLoaded', (event) => {
   var canvas = document.getElementById('canvas');
   var ctx = canvas.getContext("2d");
-  var spawnX = 0;
-  var spawnY = 0;
   var boxWidth = 64;
   var boxHeight = 64;
+  var spawnX = 0.8*canvas.width;
+  var spawnY = canvas.height-128 - boxHeight;
   var rectangles = [];
   var activeShape = null;
   console.log(canvas.width, canvas.height);
   var platform = new Rectangle(16, canvas.height - 32, 0.7 * canvas.width, 16, 'red');
-  var button = new Button(0.8*canvas.width, canvas.height-128, 0.1*canvas.width, 64, 'blue', "Spawn", 'white');
+  var button = new Button(0.8*canvas.width, canvas.height-128, 0.1*canvas.width, 64, 'blue', "Generuj klocek", 'white');
 
   var moveStartX = 0;
   var moveStartY = 0;
 
-  var mtt = new MouseTouchTracker(canvas,
+  var met = new MouseEventsTracker(canvas,
     function (evtType, x, y) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       platform.render(ctx);
@@ -159,6 +159,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
           break;
 
         case 'up':
+          if(activeShape == null) {break;}
           if(areShapesColliding(activeShape, platform))
           {
             activeShape.x = activeShape.preMoveX;
