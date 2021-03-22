@@ -147,22 +147,33 @@ document.addEventListener('DOMContentLoaded', (event) => {
           rectangles.forEach(function(r) { 
             if(isPointInShape(r, x, y)) {
               activeShape = r;
+              activeShape.preMoveX = activeShape.x;
+              activeShape.preMoveY = activeShape.y;
             }
           });
           break;
 
         case 'up':
           activeShape = null;
+          rectangles.forEach(function(r) {
+            if(r === activeShape) return;
+            if(areShapesColliding(r, activeShape))
+            {
+              activeShape.x = activeShape.preMoveX;
+              activeShape.y = activeShape.preMoveY;
+            }
+          });
           break;
 
         case 'move':
           var dx = x - moveStartX;
-          var dy = y - moveStartX;
+          var dy = y - moveStartY;
           moveStartX = x;
           moveStartY = y;
           if(activeShape != null)
           {
-
+            activeShape.x += dx;
+            activeShape.y += dy;
           }
           break;
       }
