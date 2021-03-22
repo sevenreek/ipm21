@@ -22,6 +22,11 @@ class Box extends Rectangle {
     this.preMoveX = x;
     this.preMoveY = y;
   }
+  resetMove()
+  {
+    this.preMoveX = this.x;
+    this.preMoveY = this.y;
+  }
 }
 class Button extends Rectangle {
   constructor(x, y, width, height, color, text, textColor) {
@@ -154,7 +159,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
           break;
 
         case 'up':
-          if(areShapesColliding(r, platform))
+          if(areShapesColliding(activeShape, platform))
           {
             activeShape.x = activeShape.preMoveX;
             activeShape.y = activeShape.preMoveY;
