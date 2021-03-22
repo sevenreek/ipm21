@@ -187,6 +187,4 @@ document.addEventListener('DOMContentLoaded', (event) => {
         activeShape.y += dy;
       }
     });
-
-  //rectangle.render(ctx);
 });
