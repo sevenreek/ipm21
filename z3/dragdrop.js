@@ -110,7 +110,7 @@ function areShapesColliding(a, b) {
 }
 function randomColor()
 {
-  return Math.floor(Math.random()*16777215).toString(16);
+  return '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
 }
 
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
           moveStartY = y;
           if(activeShape != null)
           {
-            
+
           }
           break;
       }
