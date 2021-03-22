@@ -108,12 +108,18 @@ function areShapesColliding(a, b) {
   var maxBy = b.y + b.height;
   return maxAx >= minBx && minAx <= maxBx && minAy <= maxBy && maxAy >= minBy;
 }
+function randomColor()
+{
+  return Math.floor(Math.random()*16777215).toString(16);
+}
 
 document.addEventListener('DOMContentLoaded', (event) => {
   var canvas = document.getElementById('canvas');
   var ctx = canvas.getContext("2d");
   var spawnX = 0;
   var spawnY = 0;
+  var boxWidth = 64;
+  var boxHeight = 64;
   var rectangles = [];
   var activeShape = null;
   console.log(canvas.width, canvas.height);
@@ -134,18 +140,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
         case 'down':
           moveStartX = x;
           moveStartY = y;
+          if(isPointInShape(button, x, y))
+          {
+            rectangles.push(new Rectangle(spawnX, spawnY, boxWidth, boxHeight, randomColor()))
+          }
           rectangles.forEach(function(r) { 
             if(isPointInShape(r, x, y)) {
-              
+              activeShape = r;
             }
           });
-          //if (isHit(rectangle, x, y)) {
-          //  rectangle.isDragging = true;
-          //}
           break;
 
         case 'up':
-          //rectangle.isDragging = false;
+          activeShape = null;
           break;
 
         case 'move':
@@ -153,11 +160,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
           var dy = y - moveStartX;
           moveStartX = x;
           moveStartY = y;
-
-          //if (rectangle.isDragging) {
-          //  rectangle.x += dx;
-          //  rectangle.y += dy;
-          //}
+          if(activeShape != null)
+          {
+            
+          }
           break;
       }
 
