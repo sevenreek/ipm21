@@ -117,9 +117,15 @@ function randomColor()
 {
   return '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
 }
-
+function resizeCanvas(canvas)
+{
+  canvas.width = 0.9*window.innerWidth;
+  canvas.height = 0.9*window.innerHeight;
+}
 document.addEventListener('DOMContentLoaded', (event) => {
+  
   var canvas = document.getElementById('canvas');
+  resizeCanvas(canvas);
   var ctx = canvas.getContext("2d");
   var boxWidth = 64;
   var boxHeight = 64;
@@ -134,6 +140,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   var moveStartX = 0;
   var moveStartY = 0;
 
+  
   var met = new MouseEventsTracker(canvas,
     function (evtType, x, y) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
