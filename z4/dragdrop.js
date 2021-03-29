@@ -4,6 +4,7 @@ let index;
 let indexDrop;
 let list;
 const TAB_KEY = 9;
+const ENTER_KEY = 13;
 
   document.addEventListener("dragstart", ({target}) => {
       dragged = target;
@@ -22,6 +23,7 @@ const TAB_KEY = 9;
 
   document.addEventListener("drop", ({target}) => {
    if(target.parentNode.className == "editable-list" && target.id !== id) {
+     console.log("should work");
       dragged.remove( dragged );
       for(let i = 0; i < list.length; i += 1) {
         if(list[i] === target){
@@ -53,10 +55,10 @@ function addTabListener(el) {
       e.preventDefault(); // Stop treating it like an actual tab
       let parent = e.target;
       let ol = document.createElement('ol');
+      ol.contentEditable = "true";
       ol.classList.add("editable-list");
       let li = document.createElement('li');
       ol.appendChild(li);
-
       var range = window.getSelection().getRangeAt(0); 
       /*
       // if the range is in #myDiv ;)
@@ -71,6 +73,10 @@ function addTabListener(el) {
       insertAfter(ol, range.commonAncestorContainer);
       //parent.appendChild(ol);
       //moveCursorToEnd(li);
+    }
+    else if(code == ENTER_KEY) {
+      var range = window.getSelection().getRangeAt(0); 
+      console.log(range.commonAncestorContainer);
     }
   });
 }
