@@ -52,7 +52,7 @@ function addTabListener(el) {
     var code = e.keyCode || e.which;
     if (code == TAB_KEY) {
       console.log("Tab pressed", e.target);
-      e.preventDefault(); // Stop treating it like an actual tab
+      e.preventDefault(); 
       let parent = e.target;
       let ol = document.createElement('ol');
       ol.contentEditable = "true";
@@ -60,31 +60,36 @@ function addTabListener(el) {
       let li = document.createElement('li');
       ol.appendChild(li);
       var range = window.getSelection().getRangeAt(0); 
-      /*
-      // if the range is in #myDiv ;)
-      if(range.startContainer.parentNode.id==='myDiv') {
-        // delete whatever is on the range
-        range.deleteContents();
-        // place your span
-        range.insertNode(newElement);
-      }*/
+
       console.log(range.commonAncestorContainer);
       range.deleteContents();
       insertAfter(ol, range.commonAncestorContainer);
       //parent.appendChild(ol);
       //moveCursorToEnd(li);
+      makeLIDraggable();
     }
     else if(code == ENTER_KEY) {
       var range = window.getSelection().getRangeAt(0); 
-      console.log(range.commonAncestorContainer);
+      makeLIDraggable();
+
     }
   });
+}
+function makeLIDraggable()
+{
+  var lis = document.querySelectorAll("li");
+  console.log(lis);
+  lis.forEach(function(entry) {
+    entry.setAttribute('draggable',true);
+  });
+
+
 }
 
 window.addEventListener('DOMContentLoaded', (event) => {
 
 
-  var lists = document.querySelector('.editable-list-container');
-  addTabListener(lists);
+  var elc = document.querySelector('.editable-list-container');
+  addTabListener(elc);
   
 });
