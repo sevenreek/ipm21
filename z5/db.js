@@ -60,6 +60,8 @@ function repopulateTable() {
             emailCell.innerHTML = cursor.value.email;
             var phoneCell = row.insertCell(4);
             phoneCell.innerHTML = cursor.value.phone;
+            var deleteCell = row.insertCell(5);
+            deleteCell.innerHTML = "<a href=\"#\" onClick=\"deleteCustomer(" + cursor.key + ")\">X</a>";
             cursor.continue();
         } else {
             var row = customerTable.insertRow(customerTable.rows.length);
@@ -148,5 +150,13 @@ function selectModifyCustomer(id) {
 
 window.addEventListener('DOMContentLoaded', (event) => {
     console.log('DOM fully loaded and parsed');
-
 });
+
+function deleteCustomer(id) {
+    var objectStore = db.transaction(["customer"], "readwrite").objectStore("customer");
+    var request = objectStore.delete(id);
+    request.onsuccess = function(event) {
+        console.log("Deleted customer");
+        window.location.reload(false);
+    };
+}
