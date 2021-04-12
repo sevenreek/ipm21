@@ -1,0 +1,6 @@
+.valid-checking:invalid {
+    border: 2px solid red;
+}
+.valid-checking:valid {
+    border: 2px solid green;
+}

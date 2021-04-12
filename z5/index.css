@@ -1,0 +1,57 @@
+.column {
+    float: left;
+}
+
+.left {
+    width: 25%;
+}
+
+.right {
+    width: 75%;
+}
+
+#customer-table {
+    width: 100%;
+}
+
+#customer-table tr:nth-child(even) {
+    background-color: #eee;
+}
+
+#customer-table tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+#customer-table th {
+    color: white;
+    background-color: black;
+}
+
+table,
+th,
+td {
+    border: 1px solid black;
+}
+
+
+/* Clear floats after the columns */
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+@media screen and (max-width: 600px) {
+    .column {
+        width: 100% !important;
+    }
+}
+
+.valid-checking:invalid {
+    border: 2px solid red;
+}
+
+.valid-checking:valid {
+    border: 2px solid green;
+}

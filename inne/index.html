@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="base.css">
+</head>
+
+<body>
+
+  <form action="#" id="super_form" >
+  
+    <label for="url">URL:</label>
+    <input required class="valid-checking" type="text" id="url" name="url" placeholder="example.com"
+      pattern="(http[s]?:\/\/)?([a-zA-Z0-9-]+\.)+([a-zA-Z0-9-]+)([\/?].*|[\/?]?)" title="URL"><br>
+
+    <label for="tel">Numer telefonu:</label>
+    <input required class="valid-checking" type="tel" id="tel" name="tel" pattern="(\d{9})|(\+\d{11})"
+      placeholder="123456789" title="Numer telefonu"><br>
+
+    <label for="email">Email:</label>
+    <input required class="valid-checking" class="valid-checking" type="email" id="email"
+      name="email" placeholder="example@example.com" title="Adres email"><br>
+
+    <label for="zip">Kod pocztowy:</label>
+    <input required class="valid-checking" type="text" id="zip" name="zip" pattern="[0-9]{2}-[0-9]{3}"
+      placeholder="12-345" title="Kod pocztowy"><br>
+
+    <label for="nip">Numer NIP:</label>
+    <input required class="valid-checking" type="text" id="nip" name="nip"
+      pattern="[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}" placeholder="123-456-78-90" title="Numer NIP"><br>
+
+    <label for="idno">Numer dowodu:</label>
+    <input required class="valid-checking" type="text" id="idno" name="idno" pattern="[a-zA-Z]{2}[0-9]{6}"
+      placeholder="AB123456" title="Numer dowodu"><br>
+
+    <label for="ipv4">IPv4:</label>
+    <input required class="valid-checking" type="text" id="ipv4" name="ipv4"
+      pattern="^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+      placeholder="123.456.789.123" title="IPv4"><br>
+
+
+    <label for="dirpath1">Ścieżka 1:</label>
+    <input required class="valid-checking" type="text" id="dirpath1" name="dirpath1"
+      pattern="^[a-zA-Z]:\\(windows|winnt|win|dos|msdos)\\?[a-z]*" placeholder="c:\windows\example"
+      title="Ścieżka 1"><br>
+
+    <label for="dirpath2">Ścieżka 2:</label>
+    <input required class="valid-checking" type="text" id="dirpath2" name="dirpath2"
+      pattern="^[a-zA-Z]:\\([Ww][Ii][Nn][Dd][Oo][Ww][Ss]|[Ww][Ii][Nn][Nn][Tt]|[Ww][Ii][Nn]|[Dd][Oo][Ss]|[Mm][Ss][Dd][Oo][Ss])\\?[a-zA-Z]*"
+      placeholder="C:\WiNdoWs\Example" title="Ścieżka 2"><br>
+
+    <label for="dirpath_etc">Ścieżka etc:</label>
+    <input required class="valid-checking" type="text" id="dirpath_etc" name="dirpath_etc"
+      pattern="^(/etc/).*" placeholder="/etc/hosts" title="Ścieżka etc"><br>
+
+    <label for="ipv6">IPv6:</label>
+    <input required class="valid-checking" type="text" id="ipv6" name="ipv6"
+      pattern="(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))"
+      placeholder="2001:0db8:85a3:0000:0000:8a2e:0370:7334" size="64" title="IPv6"><br>
+
+
+
+    <label for="date_any">Data dowolna:</label>
+    <input required class="valid-checking" type="date" id="date_any" name="date_any" title="Data dowolna"><br>
+
+    <label for="date_workday">Data powszedni ten tydzień:</label>
+    <input required class="valid-checking" type="date" id="date_workday" name="date_workday" min="2021-03-15"
+      max="2021-03-19" title="Data powszedni"><br>
+
+    <!--
+    <label for="time_12">Godzina 12:</label>
+    <input required class="valid-checking" type="time" id="time_12" name="time_12" min="00:00" max="12:00" step="600"
+      title="Godzina 12"><br>
+
+
+    -->
+    <label for="time_12">Godzina 12:</label>
+    <input required class="valid-checking" type="text" id="time_12" name="time_12"
+      pattern="(12:00|(1[0-1]|0?[0-9]):[0-5][0-9]) [AaPp][Mm]" placeholder="11:00 AM" title="Godzina 12 godzinny zegar"><br>
+
+    <label for="time_24">Godzina 24:</label>
+    <input required class="valid-checking" type="text" id="time_24" name="time_24"
+      pattern="((2[0-3])|([0-1]?[0-9])):[0-5][0-9]" placeholder="23:00" title="Godzina 12 godzinny zegar"><br>
+
+    <input required type="submit">
+  </form>
+
+  <label for="date_any">Data dowolna:</label>
+  <input required class="valid-checking" type="date" id="date_any" name="date_any" title="Data dowolna"><br>
+
+  <label for="time_24">Godzina 24:</label>
+  <input required class="valid-checking" type="time" id="time_24" name="time_24" title="Godzina 24"><br>
+
+  <label for="week">Tydzień:</label>
+  <input required type="week" class='valid-checking' id="week" name="week">
+
+  <label for="number">Liczba:</label>
+  <input required class="valid-checking"  type="number"  name="number" id="number">
+
+  <label for="head">Head</label>
+  <input required class="valid-checking"  type="color" id="head" name="head" value="#e66465">
+    
+
+</body>
+
+</html>
