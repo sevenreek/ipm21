@@ -13,21 +13,21 @@
             <form action="#" id="customer-edit-form">
 
                 <label for="customer-id">ID:</label>
-                <input type="text" value="NOWY" readonly><br>
+                <input type="number" value="-1" readonly id="customer-id" name="customer-id"><br>
 
                 <label for="name">Imię i nazwisko:</label><br>
-                <input required class="valid-checking" class="valid-checking" type="name" id="name" name="name" placeholder="John Doe" title="Imię"><br>
+                <input required class="valid-checking" class="valid-checking" type="name" id="customer-name" name="name" placeholder="John Doe" title="Imię"><br>
 
                 <label for="email">Email:</label><br>
-                <input required class="valid-checking" class="valid-checking" type="email" id="email" name="email" placeholder="example@example.com" title="Adres email"><br>
+                <input required class="valid-checking" class="valid-checking" type="email" id="customer-email" name="email" placeholder="example@example.com" title="Adres email"><br>
 
                 <label for="tel">Numer telefonu:</label><br>
-                <input required class="valid-checking" type="tel" id="tel" name="tel" pattern="(\d{9})|(\+\d{11})" placeholder="123456789" title="Numer telefonu"><br>
+                <input required class="valid-checking" type="tel" id="customer-tel" name="tel" pattern="(\d{9})|(\+\d{11})" placeholder="123456789" title="Numer telefonu"><br>
 
                 <label for="number">Wiek:</label><br>
-                <input required class="valid-checking" type="number" name="number" id="number"><br>
+                <input required class="valid-checking" type="number" name="number" id="customer-age"><br>
 
-                <input required type="submit">
+                <input required type="submit" onClick="modifyCustomer()">
             </form>
         </div>
         <div class="column right">

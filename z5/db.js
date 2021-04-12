@@ -11,8 +11,8 @@ if (!window.indexedDB) {
 }
 
 const initialDBData = [
-    { id: 0, name: "Sebastian Galecki", age: 18, email: "sgalecki@mail.com", phone: "123456789" },
-    { id: 1, name: "Karol Galecki", age: 26, email: "kgalecki@mail.com", phone: "987654321" }
+    { name: "Sebastian Galecki", age: 18, email: "sgalecki@mail.com", phone: "123456789" },
+    { name: "Karol Galecki", age: 26, email: "kgalecki@mail.com", phone: "987654321" }
 ];
 
 var db;
@@ -31,7 +31,7 @@ request.onsuccess = function(event) {
 
 request.onupgradeneeded = function(event) {
     var db = event.target.result;
-    var objectStore = db.createObjectStore("customer", { keyPath: "id" });
+    var objectStore = db.createObjectStore("customer", { autoIncrement: true });
 
     for (var i in initialDBData) {
         objectStore.add(initialDBData[i]);
@@ -70,6 +70,51 @@ function repopulateTable() {
 }
 
 function modifyCustomer() {
+
+    var objectStore = db.transaction(["customer"], "readwrite").objectStore("customer");
+    var customerID = parseInt(document.getElementById("customer-id").value);
+    var customerName = (document.getElementById("customer-name").value);
+    var customerAge = parseInt(document.getElementById("customer-age").value);
+    var customerEmail = (document.getElementById("customer-email").value);
+    var customerPhone = (document.getElementById("customer-tel").value);
+    if (customerID == -1) { // add new
+
+        var request = objectStore.add({
+            name: customerName,
+            age: customerAge,
+            email: customerEmail,
+            phone: customerPhone
+        });
+        request.onsuccess = function(event) {
+            console.log("Added new customer.");
+        };
+        request.onerror = function(event) {
+            alert("Failed to add new customer");
+        };
+
+    } else {
+        var request = objectStore.get(customerID);
+        request.onerror = function(event) {
+            alert("Customer with that ID does not exist.");
+        };
+        request.onsuccess = function(event) {
+            var data = event.target.result;
+            data.age = customerAge;
+            data.name = customerName;
+            data.email = customerEmail;
+            data.phone = customerPhone;
+
+            // Put this updated object back into the database.
+            var requestUpdate = objectStore.put(data);
+            requestUpdate.onerror = function(event) {
+                alert("Customer could not be updated.");
+            };
+            requestUpdate.onsuccess = function(event) {
+                console.log("Updated customer");
+            };
+        };
+    }
+
 
 }
 
