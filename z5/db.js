@@ -4,7 +4,7 @@ window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndex
 window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction ||
     window.msIDBTransaction;
 window.IDBKeyRange = window.IDBKeyRange ||
-    window.webkitIDBKeyRange || window.msIDBKeyRange
+    window.webkitIDBKeyRange || window.msIDBKeyRange;
 
 if (!window.indexedDB) {
     window.alert("Your browser doesn't support a stable version of IndexedDB.")
