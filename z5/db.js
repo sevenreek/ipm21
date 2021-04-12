@@ -90,6 +90,7 @@ function modifyCustomer() {
         });
         request.onsuccess = function(event) {
             console.log("Added new customer.");
+            window.location.reload(false);
         };
         request.onerror = function(event) {
             alert("Failed to add new customer");
@@ -116,6 +117,8 @@ function modifyCustomer() {
             };
             requestUpdate.onsuccess = function(event) {
                 console.log("Updated customer");
+                window.location.reload(false);
+
             };
         };
     }
@@ -123,7 +126,24 @@ function modifyCustomer() {
 
 function selectModifyCustomer(id) {
     document.getElementById("customer-id").value = id;
-
+    if (id != -1) {
+        var objectStore = db.transaction(["customer"], "readwrite").objectStore("customer");
+        var request = objectStore.get(id);
+        request.onsuccess = function(event) {
+            var data = event.target.result;
+            document.getElementById("customer-age").value = data.age;
+            document.getElementById("customer-name").value = data.name;
+            document.getElementById("customer-email").value = data.email;
+            document.getElementById("customer-tel").value = data.phone;
+            document.getElementById("customer-submit").value = 'Modyfikuj';
+        };
+    } else {
+        document.getElementById("customer-age").value = '';
+        document.getElementById("customer-name").value = '';
+        document.getElementById("customer-email").value = '';
+        document.getElementById("customer-tel").value = '';
+        document.getElementById("customer-submit").value = 'Dodaj';
+    }
 }
 
 window.addEventListener('DOMContentLoaded', (event) => {

@@ -10,7 +10,7 @@
     <div class="row">
         <div class="column left">
 
-            <form action="" id="customer-edit-form" onsubmit="return false">
+            <form action="" id="customer-edit-form" onsubmit="modifyCustomer()">
 
                 <label for="customer-id">ID:</label>
                 <input type="number" value="-1" readonly id="customer-id" name="customer-id"><br>
@@ -27,7 +27,7 @@
                 <label for="number">Wiek:</label><br>
                 <input required class="valid-checking" type="number" name="number" id="customer-age"><br>
 
-                <input required type="submit" onClick="modifyCustomer()">
+                <input required type="submit" id="customer-submit" value="Dodaj">
             </form>
         </div>
         <div class="column right">
@@ -35,9 +35,9 @@
                 <tr>
                     <th>ID</th>
                     <th>Imie i nazwisko</th>
+                    <th>Wiek</th>
                     <th>Email</th>
                     <th>Numer telefonu</th>
-                    <th>Wiek</th>
                 </tr>
             </table>
         </div>
