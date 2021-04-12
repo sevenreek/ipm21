@@ -48,11 +48,10 @@ function repopulateTable() {
 
     objectStore.openCursor().onsuccess = function(event) {
         var cursor = event.target.result;
-        var tableLength = 1; // headers
         if (cursor) {
-            var row = customerTable.insertRow(tableLength++);
+            var row = customerTable.insertRow(customerTable.rows.length);
             var idCell = row.insertCell(0);
-            idCell.innerHTML = cursor.key;
+            idCell.innerHTML = "<a href=\"#\" onClick=\"selectModifyCustomer(" + cursor.key + ")\">" + cursor.key + "</a>";
             var nameCell = row.insertCell(1);
             nameCell.innerHTML = cursor.value.name;
             var ageCell = row.insertCell(2);
@@ -63,9 +62,13 @@ function repopulateTable() {
             phoneCell.innerHTML = cursor.value.phone;
             cursor.continue();
         } else {
+            var row = customerTable.insertRow(customerTable.rows.length);
+            var newCell = row.insertCell(0);
+            newCell.innerHTML = "<a href=\"#\" onClick=\"selectModifyCustomer(" + -1 + ")\">" + -1 + "</a>";;
+            var nameCell = row.insertCell(1);
+            nameCell.innerHTML = "Nowy";
             console.log("Loaded all entries!");
         }
-
     };
 }
 
@@ -99,13 +102,15 @@ function modifyCustomer() {
         };
         request.onsuccess = function(event) {
             var data = event.target.result;
+            console.log(data);
+            console.log(event.target);
             data.age = customerAge;
             data.name = customerName;
             data.email = customerEmail;
             data.phone = customerPhone;
 
             // Put this updated object back into the database.
-            var requestUpdate = objectStore.put(data);
+            var requestUpdate = objectStore.put(data, customerID);
             requestUpdate.onerror = function(event) {
                 alert("Customer could not be updated.");
             };
@@ -114,7 +119,10 @@ function modifyCustomer() {
             };
         };
     }
+}
 
+function selectModifyCustomer(id) {
+    document.getElementById("customer-id").value = id;
 
 }
 
