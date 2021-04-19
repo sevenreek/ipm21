@@ -74,6 +74,24 @@ request.onupgradeneeded = function(event) {
     }
 }
 
+function insertCustomer(customerTable, cursor) {
+    var row = customerTable.insertRow(customerTable.rows.length);
+    var idCell = row.insertCell(0);
+    idCell.innerHTML = "<a href=\"#\" onClick=\"selectModifyCustomer(" + cursor.key + ")\">" + cursor.key + "</a>";
+    var nameCell = row.insertCell(1);
+    nameCell.innerHTML = "<a href=\"#\" onClick=\"selectModifyCustomer(" + cursor.key + ")\">" + cursor.value.name + "</a>";
+    var pidCell = row.insertCell(2);
+    pidCell.innerHTML = cursor.value.pid;
+    var emailCell = row.insertCell(3);
+    emailCell.innerHTML = cursor.value.email;
+    var phoneCell = row.insertCell(4);
+    phoneCell.innerHTML = cursor.value.phone;
+    var addressCell = row.insertCell(5);
+    addressCell.innerHTML = cursor.value.address;
+    var deleteCell = row.insertCell(6);
+    deleteCell.innerHTML = "<a href=\"#\" onClick=\"deleteCustomer(" + cursor.key + ")\">USUŃ</a>";
+}
+
 function filterResults(str, fields) {
     console.log("filtering");
     if (!str || str.length === 0) {
@@ -98,32 +116,17 @@ function filterResults(str, fields) {
                 }
             })
             if (!anyFieldContainsStr) {
-                console.log("No matching fields");
                 cursor.continue();
                 return;
             }
-            var row = customerTable.insertRow(customerTable.rows.length);
-            var idCell = row.insertCell(0);
-            idCell.innerHTML = "<a href=\"#\" onClick=\"selectModifyCustomer(" + cursor.key + ")\">" + cursor.key + "</a>";
-            var nameCell = row.insertCell(1);
-            nameCell.innerHTML = cursor.value.name;
-            var pidCell = row.insertCell(2);
-            pidCell.innerHTML = cursor.value.pid;
-            var emailCell = row.insertCell(3);
-            emailCell.innerHTML = cursor.value.email;
-            var phoneCell = row.insertCell(4);
-            phoneCell.innerHTML = cursor.value.phone;
-            var addressCell = row.insertCell(5);
-            addressCell.innerHTML = cursor.value.address;
-            var deleteCell = row.insertCell(6);
-            deleteCell.innerHTML = "<a href=\"#\" onClick=\"deleteCustomer(" + cursor.key + ")\">X</a>";
+            insertCustomer(customerTable, cursor);
             cursor.continue();
         } else {
             var row = customerTable.insertRow(customerTable.rows.length);
             var newCell = row.insertCell(0);
             newCell.innerHTML = "<a href=\"#\" onClick=\"selectModifyCustomer(" + -1 + ")\">" + -1 + "</a>";;
             var nameCell = row.insertCell(1);
-            nameCell.innerHTML = "Nowy";
+            nameCell.innerHTML = "<a href=\"#\" onClick=\"selectModifyCustomer(" + -1 + ")\">" + "Nowy" + "</a>";
             console.log("Loaded all entries!");
         }
     };
@@ -141,28 +144,15 @@ function repopulateTable() {
     objectStore.openCursor().onsuccess = function(event) {
         var cursor = event.target.result;
         if (cursor) {
-            var row = customerTable.insertRow(customerTable.rows.length);
-            var idCell = row.insertCell(0);
-            idCell.innerHTML = "<a href=\"#\" onClick=\"selectModifyCustomer(" + cursor.key + ")\">" + cursor.key + "</a>";
-            var nameCell = row.insertCell(1);
-            nameCell.innerHTML = cursor.value.name;
-            var pidCell = row.insertCell(2);
-            pidCell.innerHTML = cursor.value.pid;
-            var emailCell = row.insertCell(3);
-            emailCell.innerHTML = cursor.value.email;
-            var phoneCell = row.insertCell(4);
-            phoneCell.innerHTML = cursor.value.phone;
-            var addressCell = row.insertCell(5);
-            addressCell.innerHTML = cursor.value.address;
-            var deleteCell = row.insertCell(6);
-            deleteCell.innerHTML = "<a href=\"#\" onClick=\"deleteCustomer(" + cursor.key + ")\">X</a>";
+
+            insertCustomer(customerTable, cursor);
             cursor.continue();
         } else {
             var row = customerTable.insertRow(customerTable.rows.length);
             var newCell = row.insertCell(0);
             newCell.innerHTML = "<a href=\"#\" onClick=\"selectModifyCustomer(" + -1 + ")\">" + -1 + "</a>";;
             var nameCell = row.insertCell(1);
-            nameCell.innerHTML = "Nowy";
+            nameCell.innerHTML = "<a href=\"#\" onClick=\"selectModifyCustomer(" + -1 + ")\">" + "Nowy" + "</a>";
             console.log("Loaded all entries!");
         }
     };
