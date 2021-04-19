@@ -15,8 +15,10 @@ const DATABASE_NAME = "customers";
 const CURRENT_DATABASE_VERSION = 2;
 
 const initialDBData = [
-    { name: "Sebastian Galecki", email: "sgalecki@mail.com", phone: "123456789", address: "Galecka 30", pid: "AB123123" },
-    { name: "Karol Galecki", email: "kgalecki@mail.com", phone: "987654321", address: "Galecka 30", pid: "AB123125" }
+    { name: "Sebastian Galecki", email: "sgalecki@mail.com", phone: "123456789", address: "Galecka 30, Zgierz", pid: "AB123123" },
+    { name: "Karol Galecki", email: "kgalecki@mail.com", phone: "987654321", address: "Uliczna 30, Warszawa", pid: "CB345673" },
+    { name: "John Doe", email: "jd@mail.com", phone: "555555555", address: "Pawel 10, Zgierz", pid: "GB123123" },
+    { name: "Jane Doe", email: "jado@mail.com", phone: "333333333", address: "Ultra 40, Zgierz", pid: "TB123123" }
 ];
 
 var db;
@@ -73,6 +75,12 @@ request.onupgradeneeded = function(event) {
 }
 
 function filterResults(str, fields) {
+    console.log("filtering");
+    if (!str || str.length === 0) {
+        repopulateTable();
+        console.log("Empty string");
+        return;
+    }
     var customerTable = document.getElementById("customer-table");
     var rowCount = customerTable.rows.length;
     for (var i = rowCount - 1; i > 0; i--) {
@@ -85,12 +93,15 @@ function filterResults(str, fields) {
         if (cursor) {
             var anyFieldContainsStr = false;
             fields.forEach(function(field) {
-                if (cursor.value[field].toLowerCase().includes(str)) {
+                if (cursor.value[field].toLowerCase().includes(str.toLowerCase())) {
                     anyFieldContainsStr = true;
-                    break;
                 }
             })
-            if (!anyFieldContainsStr) return;
+            if (!anyFieldContainsStr) {
+                console.log("No matching fields");
+                cursor.continue();
+                return;
+            }
             var row = customerTable.insertRow(customerTable.rows.length);
             var idCell = row.insertCell(0);
             idCell.innerHTML = "<a href=\"#\" onClick=\"selectModifyCustomer(" + cursor.key + ")\">" + cursor.key + "</a>";
@@ -238,6 +249,21 @@ function selectModifyCustomer(id) {
 
 window.addEventListener('DOMContentLoaded', (event) => {
     console.log('DOM fully loaded and parsed');
+    var filterButton = document.getElementById('filter-button');
+    var filterInput = document.getElementById('filter-input');
+
+    filterButton.addEventListener('click', function(e) {
+        filterResults(filterInput.value, ['name', 'pid', 'address']);
+    });
+    filterInput.addEventListener("keyup", function(event) {
+        // Number 13 is the "Enter" key on the keyboard
+        if (event.keyCode === 13) {
+            // Cancel the default action, if needed
+            event.preventDefault();
+            // Trigger the button element with a click
+            filterButton.click();
+        }
+    });
 });
 
 function deleteCustomer(id) {
