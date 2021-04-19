@@ -57,10 +57,10 @@ request.onupgradeneeded = function(event) {
                     delete cursor.value.age;
                 }
                 if (cursor.value.address == undefined) {
-                    cursor.value.address = "";
+                    cursor.value.address = "-";
                 }
                 if (cursor.value.pid == undefined) {
-                    cursor.value.pid = "";
+                    cursor.value.pid = "-";
                 }
                 cursor.continue();
             }
@@ -111,7 +111,7 @@ function filterResults(str, fields) {
         if (cursor) {
             var anyFieldContainsStr = false;
             fields.forEach(function(field) {
-                if (cursor.value[field].toLowerCase().includes(str.toLowerCase())) {
+                if (String(cursor.value[field]).toLowerCase().includes(str.toLowerCase())) {
                     anyFieldContainsStr = true;
                 }
             })
