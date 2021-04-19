@@ -243,7 +243,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     var filterInput = document.getElementById('filter-input');
 
     filterButton.addEventListener('click', function(e) {
-        filterResults(filterInput.value, ['name', 'pid', 'address']);
+        filterResults(filterInput.value, ['name', 'pid', 'address', 'email', 'phone']);
     });
     filterInput.addEventListener("keyup", function(event) {
         // Number 13 is the "Enter" key on the keyboard
