@@ -65,11 +65,11 @@ request.onupgradeneeded = function(event) {
                 cursor.continue();
             }
         };
-        if (!objectStore.contains("name"))
+        if (!objectStore.indexNames.contains("name"))
             objectStore.createIndex("name", "name", { unique: false });
-        if (!objectStore.contains("pid"))
+        if (!objectStore.indexNames.contains("pid"))
             objectStore.createIndex("pid", "pid", { unique: false });
-        if (!objectStore.contains("address"))
+        if (!objectStore.indexNames.contains("address"))
             objectStore.createIndex("address", "address", { unique: false });
     }
 }
