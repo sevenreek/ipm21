@@ -10,13 +10,17 @@ if (!window.indexedDB) {
     window.alert("Your browser doesn't support a stable version of IndexedDB.")
 }
 
+const OBJECT_STORE_NAME = "customer";
+const DATABASE_NAME = "customers";
+const CURRENT_DATABASE_VERSION = 2;
+
 const initialDBData = [
-    { name: "Sebastian Galecki", age: 18, email: "sgalecki@mail.com", phone: "123456789" },
-    { name: "Karol Galecki", age: 26, email: "kgalecki@mail.com", phone: "987654321" }
+    { name: "Sebastian Galecki", email: "sgalecki@mail.com", phone: "123456789", address: "Galecka 30", pid: "AB123123" },
+    { name: "Karol Galecki", email: "kgalecki@mail.com", phone: "987654321", address: "Galecka 30", pid: "AB123125" }
 ];
 
 var db;
-var request = window.indexedDB.open("customers", 1);
+var request = window.indexedDB.open(DATABASE_NAME, CURRENT_DATABASE_VERSION);
 
 request.onerror = function(event) {
     console.log("Error while opening IndexedDB.");
@@ -31,11 +35,88 @@ request.onsuccess = function(event) {
 
 request.onupgradeneeded = function(event) {
     var db = event.target.result;
-    var objectStore = db.createObjectStore("customer", { autoIncrement: true });
-
-    for (var i in initialDBData) {
-        objectStore.add(initialDBData[i]);
+    console.log("DB Upgrade needed");
+    if (event.oldVersion < 1) {
+        console.log("Creating version 1");
+        var objectStore = db.createObjectStore(OBJECT_STORE_NAME, { autoIncrement: true });
+        for (var i in initialDBData) {
+            objectStore.add(initialDBData[i]);
+        }
+        objectStore.createIndex("name", "name", { unique: false });
+        objectStore.createIndex("pid", "pid", { unique: false });
+        objectStore.createIndex("address", "address", { unique: false });
+    } else if (event.oldVersion < 2) {
+        console.log("Updating to version 2");
+        var objectStore = request.transaction.objectStore(OBJECT_STORE_NAME);
+        objectStore.openCursor().onsuccess = function(event) {
+            var cursor = event.target.result;
+            if (cursor) {
+                if (cursor.value.age !== undefined) {
+                    delete cursor.value.age;
+                }
+                if (cursor.value.address == undefined) {
+                    cursor.value.address = "";
+                }
+                if (cursor.value.pid == undefined) {
+                    cursor.value.pid = "";
+                }
+                cursor.continue();
+            }
+        };
+        if (!objectStore.contains("name"))
+            objectStore.createIndex("name", "name", { unique: false });
+        if (!objectStore.contains("pid"))
+            objectStore.createIndex("pid", "pid", { unique: false });
+        if (!objectStore.contains("address"))
+            objectStore.createIndex("address", "address", { unique: false });
     }
+}
+
+function filterResults(str, fields) {
+    var customerTable = document.getElementById("customer-table");
+    var rowCount = customerTable.rows.length;
+    for (var i = rowCount - 1; i > 0; i--) {
+        customerTable.deleteRow(i);
+    }
+    var objectStore = db.transaction(OBJECT_STORE_NAME).objectStore(OBJECT_STORE_NAME);
+
+    objectStore.openCursor().onsuccess = function(event) {
+        var cursor = event.target.result;
+        if (cursor) {
+            var anyFieldContainsStr = false;
+            fields.forEach(function(field) {
+                if (cursor.value[field].toLowerCase().includes(str)) {
+                    anyFieldContainsStr = true;
+                    break;
+                }
+            })
+            if (!anyFieldContainsStr) return;
+            var row = customerTable.insertRow(customerTable.rows.length);
+            var idCell = row.insertCell(0);
+            idCell.innerHTML = "<a href=\"#\" onClick=\"selectModifyCustomer(" + cursor.key + ")\">" + cursor.key + "</a>";
+            var nameCell = row.insertCell(1);
+            nameCell.innerHTML = cursor.value.name;
+            var pidCell = row.insertCell(2);
+            pidCell.innerHTML = cursor.value.pid;
+            var emailCell = row.insertCell(3);
+            emailCell.innerHTML = cursor.value.email;
+            var phoneCell = row.insertCell(4);
+            phoneCell.innerHTML = cursor.value.phone;
+            var addressCell = row.insertCell(5);
+            addressCell.innerHTML = cursor.value.address;
+            var deleteCell = row.insertCell(6);
+            deleteCell.innerHTML = "<a href=\"#\" onClick=\"deleteCustomer(" + cursor.key + ")\">X</a>";
+            cursor.continue();
+        } else {
+            var row = customerTable.insertRow(customerTable.rows.length);
+            var newCell = row.insertCell(0);
+            newCell.innerHTML = "<a href=\"#\" onClick=\"selectModifyCustomer(" + -1 + ")\">" + -1 + "</a>";;
+            var nameCell = row.insertCell(1);
+            nameCell.innerHTML = "Nowy";
+            console.log("Loaded all entries!");
+        }
+    };
+
 }
 
 function repopulateTable() {
@@ -44,7 +125,7 @@ function repopulateTable() {
     for (var i = rowCount - 1; i > 0; i--) {
         customerTable.deleteRow(i);
     }
-    var objectStore = db.transaction("customer").objectStore("customer");
+    var objectStore = db.transaction(OBJECT_STORE_NAME).objectStore(OBJECT_STORE_NAME);
 
     objectStore.openCursor().onsuccess = function(event) {
         var cursor = event.target.result;
@@ -54,13 +135,15 @@ function repopulateTable() {
             idCell.innerHTML = "<a href=\"#\" onClick=\"selectModifyCustomer(" + cursor.key + ")\">" + cursor.key + "</a>";
             var nameCell = row.insertCell(1);
             nameCell.innerHTML = cursor.value.name;
-            var ageCell = row.insertCell(2);
-            ageCell.innerHTML = cursor.value.age;
+            var pidCell = row.insertCell(2);
+            pidCell.innerHTML = cursor.value.pid;
             var emailCell = row.insertCell(3);
             emailCell.innerHTML = cursor.value.email;
             var phoneCell = row.insertCell(4);
             phoneCell.innerHTML = cursor.value.phone;
-            var deleteCell = row.insertCell(5);
+            var addressCell = row.insertCell(5);
+            addressCell.innerHTML = cursor.value.address;
+            var deleteCell = row.insertCell(6);
             deleteCell.innerHTML = "<a href=\"#\" onClick=\"deleteCustomer(" + cursor.key + ")\">X</a>";
             cursor.continue();
         } else {
@@ -79,16 +162,18 @@ function modifyCustomer() {
     var objectStore = db.transaction(["customer"], "readwrite").objectStore("customer");
     var customerID = parseInt(document.getElementById("customer-id").value);
     var customerName = (document.getElementById("customer-name").value);
-    var customerAge = parseInt(document.getElementById("customer-age").value);
+    var customerPid = document.getElementById("customer-pid").value;
     var customerEmail = (document.getElementById("customer-email").value);
     var customerPhone = (document.getElementById("customer-tel").value);
+    var customerAddress = (document.getElementById("customer-address").value);
     if (customerID == -1) { // add new
 
         var request = objectStore.add({
             name: customerName,
-            age: customerAge,
+            pid: customerPid,
             email: customerEmail,
-            phone: customerPhone
+            phone: customerPhone,
+            address: customerAddress
         });
         request.onsuccess = function(event) {
             console.log("Added new customer.");
@@ -107,7 +192,8 @@ function modifyCustomer() {
             var data = event.target.result;
             console.log(data);
             console.log(event.target);
-            data.age = customerAge;
+            data.pid = customerPid;
+            data.address = customerAddress;
             data.name = customerName;
             data.email = customerEmail;
             data.phone = customerPhone;
@@ -133,17 +219,19 @@ function selectModifyCustomer(id) {
         var request = objectStore.get(id);
         request.onsuccess = function(event) {
             var data = event.target.result;
-            document.getElementById("customer-age").value = data.age;
+            document.getElementById("customer-pid").value = data.pid;
             document.getElementById("customer-name").value = data.name;
             document.getElementById("customer-email").value = data.email;
             document.getElementById("customer-tel").value = data.phone;
+            document.getElementById("customer-address").value = data.address;
             document.getElementById("customer-submit").value = 'Modyfikuj';
         };
     } else {
-        document.getElementById("customer-age").value = '';
+        document.getElementById("customer-pid").value = '';
         document.getElementById("customer-name").value = '';
         document.getElementById("customer-email").value = '';
         document.getElementById("customer-tel").value = '';
+        document.getElementById("customer-address").value = '';
         document.getElementById("customer-submit").value = 'Dodaj';
     }
 }

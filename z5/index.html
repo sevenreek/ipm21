@@ -24,8 +24,11 @@
                 <label for="tel">Numer telefonu:</label><br>
                 <input required class="valid-checking" type="tel" id="customer-tel" name="tel" pattern="(\d{9})|(\+\d{11})" placeholder="123456789" title="Numer telefonu"><br>
 
-                <label for="number">Wiek:</label><br>
-                <input required class="valid-checking" type="number" name="number" id="customer-age"><br>
+                <label for="pid">Numer dowodu:</label><br>
+                <input required class="valid-checking" type="text" name="pid" id="customer-pid" pattern="[a-zA-Z]{2}[0-9]{6}" placeholder="AB123456"><br>
+
+                <label for="address">Adres:</label><br>
+                <input required class="valid-checking" type="text" name="address" id="customer-address"><br>
 
                 <input required type="submit" id="customer-submit" value="Dodaj">
             </form>
@@ -35,9 +38,10 @@
                 <tr>
                     <th>ID</th>
                     <th>Imie i nazwisko</th>
-                    <th>Wiek</th>
+                    <th>Numer dowodu</th>
                     <th>Email</th>
                     <th>Numer telefonu</th>
+                    <th>Adres</th>
                     <th>Usuń</th>
                 </tr>
             </table>
