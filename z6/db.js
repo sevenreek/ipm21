@@ -251,6 +251,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
     filterButton.addEventListener('click', function(e) {
         filterResults(filterInput.value, ['name', 'pid', 'address', 'email', 'phone']);
     });
+    filterInput.addEventListener('input', (evt) => {
+        filterResults(filterInput.value, ['name', 'pid', 'address', 'email', 'phone']);
+    });
+
     filterInput.addEventListener("keyup", function(event) {
         // Number 13 is the "Enter" key on the keyboard
         if (event.keyCode === 13) {
