@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="index.css">
+
+</head>
+
+<body>
+    <div class="row">
+        <div class="column left">
+
+            <form action="" id="customer-edit-form" onsubmit="modifyCustomer()">
+
+                <label for="customer-id">ID:</label><br>
+                <input type="number" value="-1" readonly id="customer-id" name="customer-id" class="customer-edit-input"><br>
+
+                <label for="name">Imię i nazwisko:</label><br>
+                <input required class="valid-checking customer-edit-input" class="valid-checking" type="name" id="customer-name" name="name" placeholder="John Doe" title="Imię"><br>
+
+                <label for="email">Email:</label><br>
+                <input required class="valid-checking customer-edit-input" class="valid-checking" type="email" id="customer-email" name="email" placeholder="example@example.com" title="Adres email"><br>
+
+                <label for="tel">Numer telefonu:</label><br>
+                <input required class="valid-checking customer-edit-input" type="tel" id="customer-tel" name="tel" pattern="(\d{9})|(\+\d{11})" placeholder="123456789" title="Numer telefonu"><br>
+
+                <label for="pid">Numer dowodu:</label><br>
+                <input required class="valid-checking customer-edit-input" type="text" name="pid" id="customer-pid" pattern="[a-zA-Z]{2}[0-9]{6}" placeholder="AB123456"><br>
+
+                <label for="address">Adres:</label><br>
+                <input required class="valid-checking customer-edit-input" type="text" name="address" id="customer-address"><br>
+
+                <input required type="button" id="customer-generate" value="Generuj" class="customer-edit-button">
+                <input required type="submit" id="customer-submit" value="Dodaj" class="customer-edit-button">
+            </form>
+        </div>
+        <div class="column right">
+            <input type="search" id="filter-input" name="filter-input" aria-label="Filtruj wyniki">
+            <button id="filter-button">Filtruj</button>
+            <table id="customer-table">
+                <tr>
+                    <th>ID</th>
+                    <th>Imie i nazwisko</th>
+                    <th>Numer dowodu</th>
+                    <th>Email</th>
+                    <th>Numer telefonu</th>
+                    <th>Adres</th>
+                    <th>Usuń</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script src="fake.js"></script>
+    <script src="db.js"></script>
+</body>
+
+</html>
