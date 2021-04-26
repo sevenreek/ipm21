@@ -223,7 +223,7 @@ const FAKE_CITIES = [
     'Gdańsk',
     'Wrocław',
     'Kraków',
-    'Sczecin',
+    'Szczecin',
     'Białystok',
     'Sosnowiec'
 ];
