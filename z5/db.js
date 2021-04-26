@@ -105,17 +105,22 @@ function filterResults(str, fields) {
         customerTable.deleteRow(i);
     }
     var objectStore = db.transaction(OBJECT_STORE_NAME).objectStore(OBJECT_STORE_NAME);
-
+    var strSplit = str.split(' ');
     objectStore.openCursor().onsuccess = function(event) {
         var cursor = event.target.result;
         if (cursor) {
-            var anyFieldContainsStr = false;
-            fields.forEach(function(field) {
-                if (String(cursor.value[field]).toLowerCase().includes(str.toLowerCase())) {
-                    anyFieldContainsStr = true;
-                }
-            })
-            if (!anyFieldContainsStr) {
+            var allWordsMatched = true;
+            for (i = 0; i < strSplit.length; i++) {
+                var anyFieldContainsStr = false;
+                fields.forEach(function(field) {
+                    if (String(cursor.value[field]).toLowerCase().includes(str.toLowerCase())) {
+                        anyFieldContainsStr = true;
+                    }
+                });
+                allWordsMatched &= anyFieldContainsStr;
+                if (!allWordsMatched) break;
+            }
+            if (!allWordsMatched) {
                 cursor.continue();
                 return;
             }
