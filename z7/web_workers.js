@@ -10,6 +10,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
         console.log('Message posted to worker');
         inverterWorker.postMessage(getCustomerJSONFromForm());
     });
+
+    var urlElement = document.getElementById('image-url');
+    urlElement.addEventListener('input', function(e) {
+        console.log("Should change");
+        document.getElementById('left-image').src = urlElement.value;
+    });
 });
 
 
