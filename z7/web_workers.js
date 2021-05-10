@@ -14,7 +14,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     var urlElement = document.getElementById('image-url');
     urlElement.addEventListener('input', function(e) {
         console.log("Should change");
-        document.getElementById('left-image').src = urlElement.value;
+        document.getElementById('left-image-container').style.backgroundImage = urlElement.value;
     });
 });
 
