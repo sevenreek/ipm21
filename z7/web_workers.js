@@ -1,7 +1,9 @@
 window.addEventListener('DOMContentLoaded', (event) => {
     var inverterWorker = new Worker('invert_letter.js');
+    var imageFilterWorker = new Worker('compute_rgb.js');
     inverterWorker.onmessage = function(e) {
         putCustomerToForm(e.data);
+        sendFormToColorWorker(imageFilterWorker); // react to inver letters in form
     }
     var invertButton = document.getElementById('customer-invert');
 
@@ -13,7 +15,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 
 
-    var imageFilterWorker = new Worker('compute_rgb.js');
     imageFilterWorker.onmessage = function(e) {
         console.log("set color to ", e.data);
         document.getElementById('left-image-container').style.setProperty('--image-filter-color', `rgb(${e.data.r}, ${e.data.g}, ${e.data.b})`);
@@ -26,14 +27,22 @@ window.addEventListener('DOMContentLoaded', (event) => {
     var form = document.getElementById("customer-edit-form");
     // react to form changes
     form.addEventListener("input", function() {
-        var data = getCustomerJSONFromForm();
-        data.url = document.getElementById("image-url").value;
-        imageFilterWorker.postMessage(data);
+        sendFormToColorWorker(imageFilterWorker);
         console.log("Form has changed!");
+    });
+    // react to generate customer
+    var generateButton = document.getElementById('customer-generate');
+    generateButton.addEventListener('click', function(e) {
+        sendFormToColorWorker(imageFilterWorker);
     });
 
 });
 
+function sendFormToColorWorker(imageFilterWorker) {
+    var data = getCustomerJSONFromForm();
+    data.url = document.getElementById("image-url").value;
+    imageFilterWorker.postMessage(data);
+}
 
 
 
