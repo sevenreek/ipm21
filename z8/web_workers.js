@@ -1,12 +1,13 @@
+var inverterWorker = new Worker('invert_letter.js');
+var imageFilterWorker = new Worker('compute_rgb.js');
 window.addEventListener('DOMContentLoaded', (event) => {
 
 
 
-    var inverterWorker = new Worker('invert_letter.js');
-    var imageFilterWorker = new Worker('compute_rgb.js');
+
     inverterWorker.onmessage = function(e) {
         putCustomerToForm(e.data);
-        sendFormToColorWorker(imageFilterWorker); // react to inver letters in form
+        sendFormToColorWorker(); // react to inver letters in form
     }
     var invertButton = document.getElementById('customer-invert');
 
@@ -34,13 +35,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
     var form = document.getElementById("customer-edit-form");
     // react to form changes
     form.addEventListener("input", function() {
-        sendFormToColorWorker(imageFilterWorker);
+        sendFormToColorWorker();
         console.log("Form has changed!");
     });
     // react to generate customer
     var generateButton = document.getElementById('customer-generate');
     generateButton.addEventListener('click', function(e) {
-        sendFormToColorWorker(imageFilterWorker);
+        sendFormToColorWorker();
     });
 
 });
@@ -65,7 +66,7 @@ function clearCanvas() {
     content.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-function sendFormToColorWorker(imageFilterWorker) {
+function sendFormToColorWorker() {
     var data = getCustomerJSONFromForm();
     data.url = document.getElementById("image-url").value;
     imageFilterWorker.postMessage(data);

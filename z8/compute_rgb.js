@@ -8,7 +8,7 @@ onmessage = function(e) {
         gigaSum += sumLetters(customer[key]);
     }
 
-    console.log(gigaString);
+    //console.log(gigaString);
     postMessage({
         'r': gigaSum % 255,
         'g': 255 - (gigaSum % 255),

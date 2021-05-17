@@ -229,17 +229,21 @@ function selectModifyCustomer(id) {
         var request = objectStore.get(id);
         request.onsuccess = function(event) {
             var data = event.target.result;
+            console.log(data);
             document.getElementById("customer-pid").value = data.pid;
             document.getElementById("customer-name").value = data.name;
             document.getElementById("customer-email").value = data.email;
             document.getElementById("customer-tel").value = data.phone;
             document.getElementById("customer-address").value = data.address;
             if (data.image) {
-                var iurl = URL.createObjectURL(data.image);
+                var iurl = data.image;
                 document.getElementById("image-url").value = iurl;
-                drawImage(iurl, OVERLAY_COLOR);
-            } else
+                sendFormToColorWorker();
+                //drawImage(iurl, OVERLAY_COLOR);
+            } else {
                 document.getElementById("image-url").value = '';
+                clearCanvas();
+            }
             document.getElementById("customer-submit").value = 'Modyfikuj';
         };
     } else {
@@ -250,6 +254,7 @@ function selectModifyCustomer(id) {
         document.getElementById("customer-address").value = '';
         document.getElementById("image-url").value = '';
         document.getElementById("customer-submit").value = 'Dodaj';
+        clearCanvas();
 
     }
 }
