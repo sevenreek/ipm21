@@ -184,9 +184,17 @@ function modifyCustomer() {
             address: customerAddress,
             image: canvas.toDataURL("image/jpeg")
         });
-        request.onsuccess = function(event) {
+        request.onsuccess = function(e) {
             console.log("Added new customer.");
-            window.location.reload(false);
+            var customerTable = document.getElementById("customer-table");
+            var row = customerTable.insertRow(customerTable.rows.length - 1); // acommodate new
+            row.insertCell(0).innerHTML = e.target.result;
+            row.insertCell(1).innerHTML = "<a href=\"#\" onClick=\"selectModifyCustomer(" + e.target.result + ")\">" + customerName + "</a>";;
+            row.insertCell(2).innerHTML = customerPid;
+            row.insertCell(3).innerHTML = customerEmail;
+            row.insertCell(4).innerHTML = customerPhone;
+            row.insertCell(5).innerHTML = customerAddress;
+            row.insertCell(6).innerHTML = "<a href=\"#\" onClick=\"deleteCustomer(" + e.target.result + ")\">USUŃ</a>";
         };
         request.onerror = function(event) {
             alert("Failed to add new customer");
