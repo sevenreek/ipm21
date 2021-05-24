@@ -90,7 +90,7 @@ function insertCustomer(customerTable, cursor) {
     var addressCell = row.insertCell(5);
     addressCell.innerHTML = cursor.value.address;
     var deleteCell = row.insertCell(6);
-    deleteCell.innerHTML = "<a href=\"#\" onClick=\"deleteCustomer(" + cursor.key + ")\">USUŃ</a>";
+    deleteCell.innerHTML = "<a href=\"#!\" onClick=\"deleteCustomer(" + cursor.key + ")\">USUŃ</a>";
 }
 
 function filterResults(str, fields) {
@@ -194,7 +194,7 @@ function modifyCustomer() {
             row.insertCell(3).innerHTML = customerEmail;
             row.insertCell(4).innerHTML = customerPhone;
             row.insertCell(5).innerHTML = customerAddress;
-            row.insertCell(6).innerHTML = "<a href=\"#\" onClick=\"deleteCustomer(" + e.target.result + ")\">USUŃ</a>";
+            row.insertCell(6).innerHTML = "<a href=\"#!\" onClick=\"deleteCustomer(" + e.target.result + ")\">USUŃ</a>";
         };
         request.onerror = function(event) {
             alert("Failed to add new customer");
@@ -227,7 +227,7 @@ function modifyCustomer() {
                 //window.location.reload(false);
                 var rowIndex = customerIDToTableRow(customerID);
                 var table = document.getElementById("customer-table");
-                table.rows[rowIndex].cells[1].innerHTML = "<a href=\"#\" onClick=\"selectModifyCustomer(" + customerID + ")\">" + customerName + "</a>";;
+                table.rows[rowIndex].cells[1].innerHTML = "<a href=\"#!\" onClick=\"selectModifyCustomer(" + customerID + ")\">" + customerName + "</a>";;
                 table.rows[rowIndex].cells[2].innerHTML = customerPid;
                 table.rows[rowIndex].cells[3].innerHTML = customerEmail;
                 table.rows[rowIndex].cells[4].innerHTML = customerPhone;
