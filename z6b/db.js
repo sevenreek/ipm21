@@ -217,7 +217,7 @@ function modifyCustomer() {
             requestUpdate.onsuccess = function(event) {
                 console.log("Updated customer");
                 //window.location.reload(false);
-                var rowIndex = customerIDToTableRow(id);
+                var rowIndex = customerIDToTableRow(customerID);
                 var table = document.getElementById("customer-table");
                 table.rows[rowIndex].cells[1].innerHTML = "<a href=\"#\" onClick=\"selectModifyCustomer(" + customerID + ")\">" + customerName + "</a>";;
                 table.rows[rowIndex].cells[2].innerHTML = customerPid;
