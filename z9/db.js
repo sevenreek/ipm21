@@ -253,6 +253,7 @@ function customerIDToTableRow(id) {
 function selectModifyCustomer(id) {
     document.getElementById("customer-id").value = id;
     if (id != -1) {
+        console.log("Modifying");
         document.getElementById("invoice-container").style.display = "block";
         document.getElementById("invoice-container-alt").style.display = "none";
         CUSTOMER_ACTIVE = true;
@@ -278,6 +279,7 @@ function selectModifyCustomer(id) {
             document.getElementById("customer-submit").value = 'Modyfikuj';
         };
     } else {
+        console.log("Adding");
         CUSTOMER_ACTIVE = false;
         document.getElementById("invoice-container").style.display = "none";
         document.getElementById("invoice-container-alt").style.display = "block";
