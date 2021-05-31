@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="invoice.css">
+	</head>
+
+	<body>
+
+
+		<div class="invoice-box">
+			<table>
+				<tr class="top">
+					<td colspan="2">
+						<table>
+							<tr>
+								
+								<td id="invoice-id-date">
+									Faktura #: 123<br />
+									Z dnia: January 1, 2015<br />
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+
+				<tr class="information">
+					<td colspan="2">
+						<table>
+							<tr>
+								<td id="invoice-seller">
+									Wojciech Walewski<br />
+									239587<br />
+									Politechnika Łódzka
+								</td>
+
+								<td id="invoice-buyer">
+									NAZWISKO IMIE<br />
+									mail@mail.com<br />
+                                    ADRES<br />
+                                    PESEL<br />
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+
+				<tr class="heading">
+					<td>Produkt</td>
+
+					<td>Cena</td>
+				</tr>
+
+				
+				<tr class="item" >
+					<td id="invoice-item-name">PRODUKT</td>
+
+					<td id="invoice-item-price">$10.00</td>
+				</tr>
+
+				<tr class="total">
+					<td></td>
+
+					<td id="invoice-total">Total: $385.00</td>
+				</tr>
+			</table>
+		</div>
+    <script src="invoice.js"></script>
+	</body>
+</html>
