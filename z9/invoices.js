@@ -1,9 +1,9 @@
 const PRODUCTS = [
-    { name: "Gigabyte GeForce RTX 2060 OC 6GB GDDR6", price: "2969.0" },
-    { name: "ASUS GeForce RTX 3070 TUF Gaming OC 8GB GDDR6", price: "7159.0" },
-    { name: "KFA2 GeForce RTX 3090 HOF 24GB GDDR6X", price: "14999.0" },
-    { name: "Fujitsu Quadro RTX 6000 24GB GDDR6", price: "18599.0" },
-    { name: "PNY Quadro RTX 5000 16GB GDDR6", price: "11999.0" }
+    { name: "RTX 2060", price: "2969" },
+    { name: "RTX 2070", price: "7159" },
+    { name: "RTX 2080", price: "14999" },
+    { name: "RTX 3070", price: "18599" },
+    { name: "RTX 3080", price: "11999" }
 ];
 
 function populateSelect() {
@@ -16,6 +16,26 @@ function populateSelect() {
 
     });
 
+}
+
+function generateInvoice() {
+    //var url = new URL(window.location.hostname + "/invoice.html");
+    var customerName = (document.getElementById("customer-name").value);
+    var customerPid = document.getElementById("customer-pid").value;
+    var customerEmail = (document.getElementById("customer-email").value);
+    var customerPhone = (document.getElementById("customer-tel").value);
+    var customerAddress = (document.getElementById("customer-address").value);
+    var productIndex = (document.getElementById("product").value);
+    var productName = PRODUCTS[productIndex].name;
+    var productPrice = PRODUCTS[productIndex].price;
+    window.open(
+        `invoice.html?pname=${productName}\
+        &pprice=${productPrice}\
+        &name=${customerName}\
+        &email=${customerEmail}\
+        &address=${customerAddress}\
+        &pid=${customerPid}\
+        &phone=${customerPhone}`, '_blank').focus();
 }
 
 window.addEventListener('DOMContentLoaded', (event) => {

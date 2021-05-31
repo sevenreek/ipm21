@@ -24,6 +24,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
         ${urlParams.get('phone')}<br />
         ${urlParams.get('pid')}<br />`
     productName.innerHTML = `${urlParams.get('pname')}`;
-    productPrice.innerHTML = `${urlParams.get('pname')}`;
-    productPrice.totalPrice = `${urlParams.get('pname')}`;
+    productPrice.innerHTML = `${urlParams.get('pprice')} zł`;
+    totalPrice.innerHTML = `${urlParams.get('pprice')} zł`;
 });
