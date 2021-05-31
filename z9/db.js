@@ -1,3 +1,4 @@
+var CUSTOMER_ACTIVE = false;
 window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB ||
     window.msIndexedDB;
 
@@ -166,6 +167,7 @@ function repopulateTable() {
 }
 
 function modifyCustomer() {
+
     var canvas = document.getElementById('img-canvas');
     var objectStore = db.transaction(["customer"], "readwrite").objectStore("customer");
     var customerID = parseInt(document.getElementById("customer-id").value);
@@ -251,6 +253,8 @@ function customerIDToTableRow(id) {
 function selectModifyCustomer(id) {
     document.getElementById("customer-id").value = id;
     if (id != -1) {
+        document.getElementById("invoice-container").style.display = "block";
+        CUSTOMER_ACTIVE = true;
         var objectStore = db.transaction(["customer"], "readwrite").objectStore("customer");
         var request = objectStore.get(id);
         request.onsuccess = function(event) {
@@ -273,6 +277,9 @@ function selectModifyCustomer(id) {
             document.getElementById("customer-submit").value = 'Modyfikuj';
         };
     } else {
+        CUSTOMER_ACTIVE = false;
+        document.getElementById("invoice-container").style.display = "none";
+
         document.getElementById("customer-pid").value = '';
         document.getElementById("customer-name").value = '';
         document.getElementById("customer-email").value = '';

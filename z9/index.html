@@ -42,11 +42,15 @@
                     <input required type="button" id="customer-generate" value="Generuj" class="customer-edit-button">
                     <input required type="button" id="customer-invert" value="Odwróc litery" class="customer-edit-button">
                     <input required type="button" id="customer-submit" value="Dodaj" class="customer-edit-button" onclick="modifyCustomer()">
-                    <label for="product">Produkt</label>
-                    <select id="product" name="product">
-                    </select>
-  
-                    <input required type="button" id="generate-invoice" value="Faktura" class="customer-edit-button" onclick="generateInvoice()">
+                    
+                    <div id="invoice-container" style="display:none;">
+                    
+                        <label for="product">Produkt</label>
+                        <select id="product" name="product">
+                        </select>
+    
+                        <input required type="button" id="generate-invoice" value="Faktura" class="customer-edit-button" onclick="generateInvoice()">
+                    </div>
                 </form>
             </div>
         </div>
