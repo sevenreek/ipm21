@@ -254,6 +254,7 @@ function selectModifyCustomer(id) {
     document.getElementById("customer-id").value = id;
     if (id != -1) {
         document.getElementById("invoice-container").style.display = "block";
+        document.getElementById("invoice-container-alt").style.display = "none";
         CUSTOMER_ACTIVE = true;
         var objectStore = db.transaction(["customer"], "readwrite").objectStore("customer");
         var request = objectStore.get(id);
@@ -279,7 +280,7 @@ function selectModifyCustomer(id) {
     } else {
         CUSTOMER_ACTIVE = false;
         document.getElementById("invoice-container").style.display = "none";
-
+        document.getElementById("invoice-container-alt").style.display = "block";
         document.getElementById("customer-pid").value = '';
         document.getElementById("customer-name").value = '';
         document.getElementById("customer-email").value = '';
